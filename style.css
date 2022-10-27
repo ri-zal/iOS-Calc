@@ -1,0 +1,84 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: black;
+}
+
+.calc {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+    grid-gap: 10px;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+}
+
+button {
+    cursor: pointer;
+    border-radius: 100%;
+    border: none;
+    outline: none;
+}
+
+.calc .numbers {
+    background-color: #333333;
+    color: white;
+    font-size: 2.5rem;
+}
+
+.calc .utils {
+    background-color: #a5a5a5;
+    color: black;
+    font-size: 2.3rem;
+}
+
+.calc .operations, #equals {
+    background-color: #fe9f06;
+    color: white;
+    font-size: 3em;
+}
+
+.calc button:hover {
+    background-color: #737373;
+}
+
+.calc .utils:hover {
+    background-color: #d9d9d9;
+}
+
+.calc .operations:hover {
+    background-color: #fcc78c;
+}
+
+button#zero {
+    grid-column: span 2;
+    border-radius: 55px;
+    padding-right: 112px;
+}
+
+.output {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 10px;
+    word-wrap: break-word;
+    word-break: break-all;
+    color:white;
+}
+
+#prevOutput {
+    font-size: 2rem;
+}
+
+#curOutput {
+    font-size: 5rem;
+}
