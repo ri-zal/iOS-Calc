@@ -26,6 +26,25 @@ class Calculator {
         this.curOutput = ''
     }
 
+    percentToDecimal() {
+        const number = parseFloat(this.curOutput)
+        if (isNaN(number)) return 
+        this.curOutput = (number/100).toString()
+        this.operation = undefined
+    }
+
+    signChange() {
+        let inverted
+        const number = parseFloat(this.curOutput)
+        if (isNaN(number)) return
+        if (number >= 0) {
+            inverted = -Math.abs(number)
+        } else {
+            inverted = Math.abs(number)
+        }
+        this.curOutput = inverted
+    }
+
     compute () {
         let computation
         const prev = parseFloat(this.prevOutput)
@@ -41,7 +60,7 @@ class Calculator {
             case '×':
                 computation = prev * current
                 break
-            case '÷':
+            case ('÷'):
                 computation = prev / current
                 break
             default:
@@ -83,6 +102,8 @@ class Calculator {
 
 const numberButtons = document.querySelectorAll('.numbers')
 const operationButtons = document.querySelectorAll('.operations')
+const percentButton = document.querySelector('#percent')
+const signChangeButton = document.querySelector('#signChange')
 const equalsButton = document.querySelector('#equals')
 const clearButton = document.querySelector('#clear')
 const prevOutputText = document.querySelector('#prevOutput')
@@ -104,6 +125,16 @@ operationButtons.forEach(button => {
     })
 })
 
+percentButton.addEventListener('click', button => {
+    calculator.percentToDecimal()
+    calculator.updateDisplay()
+})
+
+signChangeButton.addEventListener('click', button => {
+    calculator.signChange()
+    calculator.updateDisplay()
+})
+
 equalsButton.addEventListener('click', button => {
     calculator.compute()
     calculator.updateDisplay()
@@ -112,4 +143,48 @@ equalsButton.addEventListener('click', button => {
 clearButton.addEventListener('click', button => {
     calculator.clear()
     calculator.updateDisplay()
+})
+
+document.addEventListener('keydown', function (event) {
+    let numberPattern = /[0-9]/g
+    let operationPattern = /[+\-*\/]/g
+
+    if (event.key.match(numberPattern)) {
+        event.preventDefault()
+        calculator.appendNumber(event.key)
+        calculator.updateDisplay()
+    }
+
+    if (event.key === '.') {
+        event.preventDefault()
+        calculator.appendNumber(event.key)
+        calculator.updateDisplay()
+    }
+
+    if (event.key.match(operationPattern)) {
+        event.preventDefault()
+        if (event.key === '*') {
+            calculator.chooseOperation('×')
+            calculator.updateDisplay()
+            
+        } else if (event.key === '/') {
+            calculator.chooseOperation('÷')
+            calculator.updateDisplay()
+        } else {
+            calculator.chooseOperation(event.key)
+            calculator.updateDisplay()
+        }
+    }
+
+    if (event.key === 'Enter' || event.key === '=') {
+        event.preventDefault()
+        calculator.compute()
+        calculator.updateDisplay()
+    }
+
+    if (event.key === 'Delete') {
+        event.preventDefault()
+        calculator.clear()
+        calculator.updateDisplay()
+    }
 })
