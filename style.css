@@ -53,7 +53,7 @@ button {
     background-color: #d9d9d9;
 }
 
-.calc .operations:hover {
+.calc .operations:hover, #equals:hover {
     background-color: #fcc78c;
 }
 
@@ -69,7 +69,7 @@ button#zero {
     align-items: flex-end;
     justify-content: space-around;
     flex-direction: column;
-    padding: 10px;
+    padding: 20px;
     word-wrap: break-word;
     word-break: break-all;
     color:white;
